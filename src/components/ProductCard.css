@@ -1,0 +1,81 @@
+.product-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-info {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.product-info h3 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 1.25rem;
+  color: #333; /* Asegura que el título sea oscuro y legible */
+}
+
+.product-description {
+  font-size: 0.9rem;
+  color: #666;
+  flex-grow: 1;
+  margin-bottom: 16px;
+}
+
+.product-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.product-price {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.product-quantity {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.reserve-button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.reserve-button:hover {
+  background-color: #0056b3;
+}
+
+.reservation-message {
+  margin-top: 12px;
+  padding: 8px;
+  font-size: 0.9rem;
+  text-align: center;
+  font-weight: 500;
+  border-radius: 4px;
+}
+
