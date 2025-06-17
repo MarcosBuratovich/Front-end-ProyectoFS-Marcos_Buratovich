@@ -17,7 +17,7 @@
   border-radius: 8px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   width: 90%;
-  max-width: 500px;
+  max-width: 1000px;
   max-height: 90vh;
   overflow-y: auto;
 }
@@ -50,6 +50,18 @@
   margin-bottom: 20px;
 }
 
+.size-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.size-grid .size-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .slots-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
@@ -74,6 +86,18 @@
   background-color: #007bff;
   color: white;
   font-weight: bold;
+}
+
+.slot-btn.disabled {
+  background-color: #f0f0f0;
+  color: #999;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
+
+.available-count {
+  font-size: 0.8rem;
+  color: #555;
 }
 
 .modal-actions {
@@ -124,4 +148,38 @@
   background-color: #d4edda;
   color: #155724;
   border: 1px solid #c3e6cb;
+}
+
+/* Selector de cantidad genérico */
+.quantity-selector {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.quantity-selector button {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #007bff;
+  background-color: #fff;
+  color: #007bff;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.quantity-selector button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.qty-value {
+  min-width: 24px;
+  text-align: center;
+}
+.quantity-selector.small button {
+  width: 22px;
+  height: 22px;
+  font-size: 0.8rem;
+}
+.quantity-selector.small .qty-value {
+  min-width: 20px;
+  font-size: 0.85rem;
 }

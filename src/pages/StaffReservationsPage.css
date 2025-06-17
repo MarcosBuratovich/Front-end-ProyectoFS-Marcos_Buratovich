@@ -1,0 +1,322 @@
+/* Estilos para la página de gestión de reservas para staff */
+.reservations-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Filtros */
+.filters-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-group label {
+  font-weight: 600;
+  min-width: 50px;
+}
+
+.filter-select, .filter-date {
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.clear-filter-btn {
+  background: none;
+  border: none;
+  color: #dc3545;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+/* Tabla de reservas */
+.reservations-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.reservations-table th,
+.reservations-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.reservations-table th {
+  background-color: #005cb9;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+.reservations-table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* Estilos para estados de pago */
+.status {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.status-pending {
+  background-color: #fff3cd;
+  color: #876404;
+  border: 1px solid #ffeeba;
+}
+
+.status-paid {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.status-canceled {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Fila de reserva cancelada */
+.reservation-row.canceled {
+  background-color: #fff8f8;
+  color: #999;
+}
+
+.reservation-row.canceled td {
+  opacity: 0.7;
+}
+
+/* Estilos para botones */
+/* Botones de acción */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.action-button {
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.pay-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.pay-button:hover {
+  background-color: #218838;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.cancel-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.cancel-button:hover {
+  background-color: #c82333;
+}
+
+.receipt-button {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.receipt-button:hover {
+  background-color: #138496;
+}
+
+.details-button {
+  background-color: #6c757d;
+  color: white;
+}
+
+.details-button:hover {
+  background-color: #5a6268;
+}
+
+/* Mensaje de éxito */
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  border-left: 4px solid #28a745;
+}
+
+/* Mensaje de error */
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  border-left: 4px solid #dc3545;
+}
+
+/* Estilos para enlaces en la barra de navegación */
+.staff-link {
+  color: #17a2b8 !important;
+  font-weight: 600;
+}
+
+/* Formato de pago y deadline */
+.deadline-past {
+  color: #dc3545;
+  font-weight: 600;
+}
+
+.deadline-approaching {
+  color: #ffc107;
+  font-weight: 600;
+}
+
+/* Columna de precio */
+.price-column {
+  font-weight: 600;
+  text-align: right;
+}
+
+/* Mensajes informativos */
+.success-message, .error-message {
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.success-message::before, .error-message::before {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  border-left: 4px solid #28a745;
+}
+
+.success-message::before {
+  content: '✅';
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-left: 4px solid #dc3545;
+}
+
+.error-message::before {
+  content: '⚠️';
+}
+
+/* Mostrar detalles del cliente */
+.customer-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.customer-info .name {
+  font-weight: 600;
+}
+
+.customer-info .contact {
+  font-size: 13px;
+  color: #666;
+}
+
+/* Vista expandida de detalles */
+.expanded-details td {
+  padding: 0;
+}
+
+.details-container {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-top: 1px solid #dee2e6;
+  border-bottom: 1px solid #dee2e6;
+  margin: 0;
+}
+
+.details-container h4 {
+  margin-top: 0;
+  color: #212529;
+  font-size: 16px;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.details-grid h5 {
+  margin-top: 0;
+  color: #495057;
+  font-size: 14px;
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 5px;
+}
+
+.products-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.products-list li {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed #e9ecef;
+}
+
+.products-list li:last-child {
+  border-bottom: none;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .reservations-table {
+    display: block;
+    overflow-x: auto;
+  }
+}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getProducts } from '../services/apiService';
 import ProductCard from '../components/ProductCard';
+import { RiParkingBoxLine } from 'react-icons/ri';
 import './ProductsPage.css';
 
 function ProductsPage() {
@@ -24,20 +25,40 @@ function ProductsPage() {
     fetchProducts();
   }, []);
 
-  if (loading) return <div>Cargando productos...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return (
+    <div className="dashboard-loading">
+      <div className="loading-spinner"></div>
+      <p>Cargando productos...</p>
+    </div>
+  );
+  
+  if (error) return (
+    <div className="dashboard-card">
+      <div className="error-message">Error: {error}</div>
+    </div>
+  );
 
   return (
-    <div>
-      <h1>Productos Disponibles</h1>
+    <div className="products-page-container" style={{ width: '100%' }}>
+      <div className="dashboard-card-header" style={{ width: '100%' }}>
+        <h2>
+          <RiParkingBoxLine style={{ marginRight: '10px', verticalAlign: 'middle' }} />
+          Catálogo de Productos
+        </h2>
+      </div>
+      
       {products.length > 0 ? (
-        <div className="product-grid">
-          {products.map((product) => (
-            <ProductCard key={product._id} product={product} />
-          ))}
+        <div className="dashboard-card" style={{ width: '100%' }}>
+          <div className="product-grid">
+            {products.map((product) => (
+              <ProductCard key={product._id} product={product} />
+            ))}
+          </div>
         </div>
       ) : (
-        <p>No hay productos disponibles en este momento.</p>
+        <div className="dashboard-card" style={{ width: '100%' }}>
+          <p>No hay productos disponibles en este momento.</p>
+        </div>
       )}
     </div>
   );

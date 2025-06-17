@@ -1,73 +1,87 @@
+/* Los estilos base vienen de las clases dashboard-card y action-card */
+
+/* Añadimos estilos específicos para productos */
 .product-card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease-in-out;
-  background-color: #fff;
+  height: 100%;
+  margin-bottom: 0;
   display: flex;
   flex-direction: column;
-}
-
-.product-card:hover {
-  transform: translateY(-5px);
-}
-
-.product-info {
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-
-.product-info h3 {
-  margin-top: 0;
-  margin-bottom: 8px;
-  font-size: 1.25rem;
-  color: #333; /* Asegura que el título sea oscuro y legible */
-}
-
-.product-description {
-  font-size: 0.9rem;
-  color: #666;
-  flex-grow: 1;
-  margin-bottom: 16px;
+  align-items: center;
 }
 
 .product-details {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 15px;
+  width: 100%;
+  padding: 0 15px;
 }
 
 .product-price {
   font-weight: bold;
   font-size: 1.1rem;
-  color: #333;
+  color: var(--dark);
 }
 
 .product-quantity {
   font-size: 0.9rem;
-  color: #555;
 }
 
-.reserve-button {
-  display: block;
+/* Estilos añadidos para los iconos de productos */
+.product-icon {
+  margin-bottom: 15px;
+  background: rgba(52, 152, 219, 0.1);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+/* Estilos para los botones de acción en tarjetas de productos */
+.product-actions {
   width: 100%;
-  padding: 12px;
-  background-color: #007bff;
-  color: white;
-  border: none;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 0 15px 10px;
+}
+
+.product-actions button {
+  flex: 1;
+  padding: 8px 12px;
   border-radius: 4px;
   cursor: pointer;
-  text-align: center;
-  font-size: 1rem;
-  transition: background-color 0.2s;
+  font-weight: 500;
+  transition: all 0.2s;
+  border: none;
+  max-width: 130px;
 }
 
-.reserve-button:hover {
-  background-color: #0056b3;
+.product-actions button.btn-primary {
+  background-color: var(--primary);
+  color: white;
+}
+
+.product-actions button.btn-secondary {
+  background-color: var(--secondary);
+  color: white;
+}
+
+.product-actions button:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.product-actions button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
 }
 
 .reservation-message {
@@ -77,5 +91,36 @@
   text-align: center;
   font-weight: 500;
   border-radius: 4px;
+  background-color: rgba(52, 152, 219, 0.1);
+  width: 100%;
 }
+
+/* Selector de cantidad reutilizable */
+.quantity-selector {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.quantity-selector button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--primary);
+  background-color: #fff;
+  color: var(--primary);
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.quantity-selector button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.qty-value {
+  min-width: 24px;
+  text-align: center;
+}
+
 

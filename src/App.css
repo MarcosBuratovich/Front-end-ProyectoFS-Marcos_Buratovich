@@ -1,42 +1,381 @@
+/* Estilos para el spinner de carga */
+.dashboard-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f5f7fa;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(52, 152, 219, 0.2);
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Variables CSS para paleta de colores */
+:root {
+  --primary: #2c3e50;
+  --secondary: #34495e;
+  --accent: #3498db;
+  --accent-light: #75b2e4;
+  --success: #2ecc71;
+  --warning: #f39c12;
+  --danger: #e74c3c;
+  --light: #ecf0f1;
+  --dark: #2c3e50;
+  --border: #dde1e3;
+  --text: #333;
+  --text-light: #7f8c8d;
+  --shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Reset y estilos base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color: var(--text);
+  background-color: #f5f7fa;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 #root {
-  max-width: 1280px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Estilos del Dashboard */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Navbar superior */
+.dashboard-navbar {
+  background-color: var(--primary);
+  color: white;
+  padding: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.dashboard-navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  width: 100%;
+  height: 100%;
+}
+
+.dashboard-logo {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  height: 100%;
+  align-items: center;
+}
+
+.nav-links li {
+  height: 100%;
+}
+
+.nav-links a, .nav-links button {
+  display: flex;
+  align-items: center;
+  color: var(--light);
+  text-decoration: none;
+  padding: 0 15px;
+  height: 100%;
+  transition: background-color 0.2s;
+  border: none;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.nav-links a:hover, .nav-links button:hover {
+  background-color: var(--secondary);
+  color: white;
+}
+
+.auth-links {
+  margin-left: auto;
+}
+
+/* Perfil de usuario en navbar */
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.username {
+  font-weight: 500;
+  color: var(--light);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.staff-link {
+  background-color: var(--accent);
+  font-weight: 500;
+}
+
+.staff-link:hover {
+  background-color: var(--accent-light) !important;
+}
+
+/* Contenido principal */
+.dashboard-content {
+  flex: 1;
+  padding: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Contenedor con ancho máximo consistente para todas las páginas */
+.dashboard-content-inner {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  width: 100%;
+  padding: 0 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Asegurar que todos los componentes de página ocupen el ancho completo disponible */
+.dashboard-content-inner > div,
+.products-page-container,
+.reservations-container,
+.home-page-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Componentes comunes */
+.dashboard-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.dashboard-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
+  width: 100%;
+}
+
+.dashboard-card-header h2 {
+  font-size: 1.25rem;
+  color: var(--dark);
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Botones */
+.btn {
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background-color: var(--accent);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-light);
+}
+
+.btn-success {
+  background-color: var(--success);
+  color: white;
+}
+
+.btn-danger {
+  background-color: var(--danger);
+  color: white;
+}
+
+/* Tablas */
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.dashboard-table th, .dashboard-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.dashboard-table th {
+  background-color: #f8f9fa;
+  font-weight: 500;
+  color: var(--text-light);
+}
+
+.dashboard-table tr:hover {
+  background-color: #f8f9fa;
+}
+
+/* Estilos para dashboard de inicio */
+.dashboard-summary {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 25px;
+  box-shadow: var(--shadow);
+}
+
+.dashboard-actions {
+  margin: 30px 0;
+}
+
+.action-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.action-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 30px 20px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.action-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.action-icon {
+  margin-bottom: 15px;
+  background: rgba(52, 152, 219, 0.1);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-card h3 {
+  margin-bottom: 10px;
+  color: var(--dark);
+}
+
+.action-card p {
+  margin-bottom: 20px;
+  color: var(--text-light);
+  flex-grow: 1;
+}
+
+.action-card .btn {
+  width: 100%;
+  max-width: 200px;
+}
+
+/* Badges para estados */
+.badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.badge-success {
+  background-color: #d4f8d4;
+  color: var(--success);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.badge-warning {
+  background-color: #fdf3d8;
+  color: var(--warning);
+}
+
+.badge-danger {
+  background-color: #fcdad7;
+  color: var(--danger);
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .dashboard-navbar-container {
+    flex-direction: column;
+    padding: 10px;
+    height: auto;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .nav-links {
+    flex-direction: column;
+    width: 100%;
+    margin-top: 10px;
   }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  
+  .nav-links li, .nav-links a {
+    width: 100%;
+    height: auto;
+    padding: 10px;
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+  
+  .auth-links {
+    margin-left: 0;
+    margin-top: 10px;
+  }
 }

@@ -49,12 +49,22 @@ export const getProducts = async () => {
 
 /**
  * Crea una nueva reserva para un producto.
- * @param {object} reservationData - Datos de la reserva ({ productId, startDate, endDate }).
+ * @param {object} reservationData - Datos de la reserva ({ customerName, customerContact, productId, date, slots, quantity }).
  * @param {string} token - Token JWT del usuario.
  * @returns {Promise<object>} - La reserva creada.
  */
 export const createReservation = async (reservationData, token) => {
-  const { user, productId, date, slots, quantity } = reservationData;
+  const {
+    customerName,
+    customerContact,
+    productId,
+    quantity,
+    riders,
+    date,
+    slots,
+    safetyEquipmentRequested = []
+  } = reservationData;
+  
   try {
     const response = await fetch(`${API_BASE_URL}/reservations`, {
       method: 'POST',
@@ -63,14 +73,12 @@ export const createReservation = async (reservationData, token) => {
         'Authorization': `Bearer ${token}`, // <-- Token de autenticación
       },
             body: JSON.stringify({
-        customer: {
-          id: user.id,
-          name: user.name,
-          contact: user.username,
-        },
+        customer: { name: customerName, contact: customerContact },
         products: [{ product: productId, quantity }],
         date,
         slots,
+        ...(riders ? { riders } : {}),
+        ...(safetyEquipmentRequested.length ? { safetyEquipmentRequested } : {})
       }),
     });
 
@@ -108,39 +116,32 @@ export const getProductAvailability = async (productId, date) => {
   }
 };
 
-/**
- * Registra un nuevo usuario.
- * @param {object} userData - Datos del usuario (name, username, password).
- * @returns {Promise<object>} - El usuario creado.
- */
-export const registerUser = async (userData) => {
+// Actualiza cantidad de un producto (admin)
+export const updateProductQuantity = async (productId, updateData, token) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/auth/register`, {
-      method: 'POST',
+    const res = await fetch(`${API_BASE_URL}/products/${productId}`, {
+      method: 'PUT',
       headers: {
-        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(userData),
+      body: JSON.stringify(updateData),
     });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      // El backend devuelve el error en data.message
-      throw new Error(data.message || 'Error al registrar el usuario');
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || 'Error al actualizar el producto');
     }
-
-    return data;
+    return await res.json();
   } catch (error) {
-    console.error('Error en registerUser:', error);
+    console.error('Error en updateProductQuantity:', error);
     throw error;
   }
 };
 
+// Función registerUser eliminada porque el sistema es cerrado para staff/admin
+
 /**
- * Obtiene todas las reservas del usuario autenticado.
- * @param {string} token - Token JWT del usuario.
- * @returns {Promise<Array>} - Un array de las reservas del usuario.
+ * Las siguientes funciones se enfocan solo en gestión por staff/admin
  */
 /**
  * Cancela una reserva específica.
@@ -170,9 +171,123 @@ export const cancelReservation = async (reservationId, token) => {
   }
 };
 
-export const getUserReservations = async (token) => {
+// Función getUserReservations eliminada porque el sistema es cerrado para staff/admin
+
+/**
+ * ------------ SAFETY EQUIPMENT (Cascos / Chalecos) -------------
+ */
+export const getAllSafetyEquipment = async (token) => {
   try {
-        const response = await fetch(`${API_BASE_URL}/reservations`, {
+    const res = await fetch(`${API_BASE_URL}/safety-equipment`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || 'Error al obtener el equipo de seguridad');
+    }
+    const data = await res.json();
+    return data.equipment || data;
+  } catch (error) {
+    console.error('Error en getAllSafetyEquipment:', error);
+    throw error;
+  }
+};
+
+export const createSafetyEquipment = async (equipmentData, token) => {
+  try {
+    const res = await fetch(`${API_BASE_URL}/safety-equipment`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(equipmentData),
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || 'Error al crear el equipo');
+    }
+    return await res.json();
+  } catch (error) {
+    console.error('Error en createSafetyEquipment:', error);
+    throw error;
+  }
+};
+
+export const updateSafetyEquipment = async (id, equipmentData, token) => {
+  try {
+    const res = await fetch(`${API_BASE_URL}/safety-equipment/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(equipmentData),
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || 'Error al actualizar el equipo');
+    }
+    return await res.json();
+  } catch (error) {
+    console.error('Error en updateSafetyEquipment:', error);
+    throw error;
+  }
+};
+
+export const deleteSafetyEquipment = async (id, token) => {
+  try {
+    const res = await fetch(`${API_BASE_URL}/safety-equipment/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || 'Error al eliminar el equipo');
+    }
+    return await res.json();
+  } catch (error) {
+    console.error('Error en deleteSafetyEquipment:', error);
+    throw error;
+  }
+};
+
+/**
+ * -------- RESERVAS DEL DÍA / CALENDARIO ----------
+ */
+export const getReservationsByDate = async (dateISO, token) => {
+  try {
+    const res = await fetch(`${API_BASE_URL}/reservations/date/${dateISO}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || 'Error al obtener las reservas del día');
+    }
+    const data = await res.json();
+    return data.reservations || data;
+  } catch (error) {
+    console.error('Error en getReservationsByDate:', error);
+    throw error;
+  }
+};
+
+// Aquí se añadirán más funciones para interactuar con la API (productos, reservas, etc.)
+
+/**
+ * Obtiene todas las reservas del sistema (solo para staff/admin)
+ * @param {string} token - Token JWT del staff o admin
+ * @returns {Promise<Array>} - Un array con todas las reservas
+ */
+export const getAllReservations = async (token) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/reservations`, {
       headers: {
         'Authorization': `Bearer ${token}`,
       },
@@ -184,11 +299,71 @@ export const getUserReservations = async (token) => {
     }
 
     const data = await response.json();
-    return data.reservations; // El backend ahora devuelve las reservas en un objeto 'reservations'
+    return data.reservations;
   } catch (error) {
-    console.error('Error en getUserReservations:', error);
+    console.error('Error en getAllReservations:', error);
     throw error;
   }
 };
 
-// Aquí se añadirán más funciones para interactuar con la API (productos, reservas, etc.)
+/**
+ * Marca una reserva como pagada
+ * @param {string} reservationId - ID de la reserva
+ * @param {string} token - Token JWT del staff o admin
+ * @returns {Promise<Object>} - La respuesta de la API
+ */
+export const markReservationPaid = async (reservationId, token, payment = { type: 'cash', currency: 'local' }) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/reservations/${reservationId}/payment`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        paymentMethod: {
+          type: payment.type,
+          currency: payment.currency
+        }
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Error al procesar el pago de la reserva');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error en markReservationPaid:', error);
+    throw error;
+  }
+};
+
+/**
+ * Procesa el reembolso parcial (50 %) por seguro de tormenta
+ * @param {string} reservationId - ID de la reserva
+ * @param {string} token - Token JWT del staff o admin
+ * @returns {Promise<Object>} - La respuesta de la API
+ */
+export const processStormRefund = async (reservationId, token) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/reservations/${reservationId}/storm-refund`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Error al procesar el reembolso por tormenta');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error en processStormRefund:', error);
+    throw error;
+  }
+};

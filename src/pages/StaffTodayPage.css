@@ -1,0 +1,13 @@
+.today-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.today-table th, .today-table td {
+  border: 1px solid #ddd;
+  padding: 6px;
+  text-align: center;
+}
+.today-table th { background: #f4f4f4; }
+.status-paid { background: #d1e7dd; }
+.status-pending { background: #fff3cd; }
+.status-canceled { background: #f8d7da; }
